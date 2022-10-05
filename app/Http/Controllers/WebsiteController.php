@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
 {
-    public function home(){
-        return view('home');
+    public function home(Request $request){
+        return view('student.home');
     }
 }

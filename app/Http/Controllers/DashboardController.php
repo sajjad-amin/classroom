@@ -9,6 +9,6 @@ class DashboardController extends Controller
 {
     public function index(Request $request){
         $user = Auth::user();
-        return view('system.dashboard.index', compact(['user']));
+        return view('teacher.dashboard.index', compact(['user']));
     }
 }

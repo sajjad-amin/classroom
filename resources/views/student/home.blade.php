@@ -13,9 +13,18 @@
                     <a href="{{route('login')}}" class="btn btn-outline-success my-2 mr-2 my-sm-0" >Login</a>
                     <a href="{{route('register')}}" class="btn btn-outline-success my-2 my-sm-0" >Register</a>
                 @else
-                    <a class="btn text-white" type="button" href="{{route('dashboard')}}">
-                        {{\Illuminate\Support\Facades\Auth::user()->name}}
-                    </a>
+                    <div class="dropdown">
+                        <button class="btn text-white" type="button" id="dashboardDropdown" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            {{\Illuminate\Support\Facades\Auth::user()->name}}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dashboardDropdown">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">Logout</button>
+                            </form>
+                        </div>
+                    </div>
                 @endif
             </div>
         </div>
