@@ -54,3 +54,7 @@ a:active, a:hover {
 .list-image{
     width: 80px;
 }
+.post img {
+    max-height: 200px;
+    width: 100%;
+}

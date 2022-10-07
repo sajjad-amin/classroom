@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+
 if(!function_exists('serializeMetadata')){
     function serializeMetadata($array){
         $data = [];
@@ -22,5 +24,15 @@ if (!function_exists('unserializeMetadata')){
             $array[] = $d;
         }
         return $array;
+    }
+}
+
+if (!function_exists('isFileImage')){
+    function isFileImage($path){
+        if(Storage::exists($path)){
+            $mimeType = Storage::mimeType($path);
+            return str_contains(strtolower($mimeType),strtolower('image'));
+        }
+        return false;
     }
 }

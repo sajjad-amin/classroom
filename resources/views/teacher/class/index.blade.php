@@ -6,7 +6,9 @@
             @foreach($courses as $course)
                 <div class="card m-2" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">{{$course->title}}</h5>
+                        <a href="{{route('dashboard.class.open', ['id'=>$course->id])}}">
+                            <h5 class="card-title">{{$course->title}}</h5>
+                        </a>
                         <p class="card-text">{{$course->description}}</p>
                     </div>
                 </div>
