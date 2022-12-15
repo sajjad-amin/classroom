@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TeacherCoureseExplore;
 use App\Http\Controllers\CourseController;
@@ -20,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WebsiteController::class, 'home'])->name('home');
 
+Route::prefix('class')->middleware(['auth'])->name('class.')->group(function(){
+    Route::post('/join', [MemberController::class, 'joinClass'])->name('join');
+});
 
 Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dashboard.')->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -40,6 +44,8 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dash
         Route::get('edit/{id}', [PostController::class, 'edit'])->name('edit');
         Route::put('update', [PostController::class, 'update'])->name('update');
         Route::delete('delete', [PostController::class, 'delete'])->name('delete');
+        Route::post('comment/create', [PostController::class, 'createComment'])->name('comment.create');
+        Route::delete('comment/delete', [PostController::class, 'deleteComment'])->name('comment.delete');
     });
 });
 

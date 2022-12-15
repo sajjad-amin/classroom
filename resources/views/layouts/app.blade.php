@@ -12,6 +12,7 @@
     @yield('style')
 </head>
 <body>
+@include('student.sidebar')
 @yield('content')
 </body>
 </html>

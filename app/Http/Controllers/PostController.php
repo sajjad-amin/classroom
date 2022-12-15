@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,8 @@ class PostController extends Controller
     public function index($id)
     {
         $post = Post::whereId($id)->first();
-        return view('teacher.post.index', compact(['post']));
+        $comments = Comment::wherePostId($id)->orderBy('created_at', 'desc')->get();
+        return view('teacher.post.index', compact(['post', 'comments']));
     }
 
     public function create(Request $request){
@@ -60,5 +62,26 @@ class PostController extends Controller
             toastr()->success("post has been deleted!");
         }
         return redirect()->action([CourseController::class, 'open'],['id' => $post->course_id]);
+    }
+
+    public function createComment(Request $request){
+        $post_id = $request->post_id;
+        $data = [
+            'post_id' => $post_id,
+            'user_id' => Auth::user()->id,
+            'comment' => $request->comment,
+            'created_at' => now(),
+        ];
+        Comment::insert($data);
+        return redirect()->action([get_class($this), 'index'],['id'=> $post_id]);
+    }
+
+    public function deleteComment(Request $request){
+        $id = $request->id;
+        $comment = Comment::whereId($id)->first();
+        if(Comment::whereId($id)->delete()){
+            toastr()->success("Comment has been deleted!");
+        }
+        return redirect()->action([get_class($this), 'index'],['id'=> $comment->post_id]);
     }
 }
