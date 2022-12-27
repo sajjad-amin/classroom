@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index($id)
     {
         $post = Post::whereId($id)->first();
-        $comments = Comment::wherePostId($id)->orderBy('created_at', 'desc')->get();
+        $comments = Comment::wherePostId($id)->get();
         return view('teacher.post.index', compact(['post', 'comments']));
     }
 

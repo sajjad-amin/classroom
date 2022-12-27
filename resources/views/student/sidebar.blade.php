@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar"
+            aria-controls="homeNavbar" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="homeNavbar">
@@ -8,12 +9,16 @@
         </ul>
         <div class="form-inline my-2 my-lg-0">
             @if(!\Illuminate\Support\Facades\Auth::user())
-                <a href="{{route('login')}}" class="btn btn-outline-success my-2 mr-2 my-sm-0" >Login</a>
-                <a href="{{route('register')}}" class="btn btn-outline-success my-2 my-sm-0" >Register</a>
+                <a href="{{route('login')}}" class="btn btn-outline-success my-2 mr-2 my-sm-0">Login</a>
+                <a href="{{route('register')}}" class="btn btn-outline-success my-2 my-sm-0">Register</a>
             @else
                 <!-- Button trigger modal -->
                 @can('student')
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#joinClass">+ Join Class</button>
+                    @if(Route::is('home'))
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#joinClass">+ Join
+                            Class
+                        </button>
+                    @endif
                 @endcan
                 <div class="dropdown">
                     <button class="btn text-white" type="button" id="dashboardDropdown" data-toggle="dropdown"

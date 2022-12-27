@@ -45,7 +45,7 @@
                             @php
                             $commenter = \App\Models\User::get()->where('id', $comment->user_id)->first();
                             @endphp
-                            <div class="card mb-3">
+                            <div class="card mb-3 @if($commenter->id == auth()->user()->id) bg-light @endif">
                                 <div class="d-flex flex-row-reverse">
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" id="commentDropdownContextMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
