@@ -20,6 +20,7 @@
                         </button>
                     @endif
                 @endcan
+                @yield('navmenu')
                 <div class="dropdown">
                     <button class="btn text-white" type="button" id="dashboardDropdown" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">

@@ -28,6 +28,7 @@ Route::prefix('class')->middleware(['auth'])->name('class.')->group(function(){
     Route::get('/{id}', [StudentCourseController::class, 'index'])->name('open');
     Route::post('/join', [MemberController::class, 'joinCourse'])->name('join');
     Route::delete('/leave', [MemberController::class, 'leaveCourse'])->name('leave');
+    Route::get('/{id}/student', [StudentCourseController::class, 'listStudent'])->name('students');
     Route::prefix('post')->name('post.')->group(function(){
         Route::get('/{id}', [StudentPostController::class, 'index'])->name('index');
         Route::post('comment/create', [CommentController::class, 'create'])->name('comment.create');
@@ -46,6 +47,8 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dash
         Route::put('update', [CourseController::class, 'update'])->name('update');
         Route::delete('delete', [CourseController::class, 'delete'])->name('delete');
         Route::get('/{id}', [CourseController::class, 'open'])->name('open');
+        Route::get('/{id}/student', [CourseController::class, 'listStudent'])->name('students');
+        Route::delete('{id}/student/remove', [CourseController::class, 'removeStudent'])->name('student.remove');
     });
     // Post
     Route::prefix('post')->name('post.')->group(function(){

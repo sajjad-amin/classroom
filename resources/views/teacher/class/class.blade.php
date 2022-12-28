@@ -10,6 +10,7 @@ $posts = \App\Models\Post::whereCourseId($course->id)->orderBy('id', 'desc')->ge
             <h2>{{$course->title}}</h2>
             <div class="dropdown">
                 <button class="btn btn-warning float-right" type="button" id="dashboardDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                <a href="{{route('dashboard.class.students', ['id' => $course->id])}}" class="btn btn-primary float-right mr-2" type="button" >Students</a>
                 <div class="dropdown-menu" aria-labelledby="dashboardDropdown">
                     <a class="dropdown-item text-primary" href="{{route('dashboard.class.edit',['id'=>$course->id])}}">Edit</a>
                     <form method="POST" action="{{ route('dashboard.class.delete') }}" onsubmit="return confirm('Are you sure?')">
@@ -28,6 +29,9 @@ $posts = \App\Models\Post::whereCourseId($course->id)->orderBy('id', 'desc')->ge
             <div class="card post mt-3">
                 <div class="card-body">
                     <p class="card-text">{{$post->text}}</p>
+                    <p class="card-text">
+                        <small class="text-muted">Posted on {{$post->created_at->format("d M, Y h:i A")}}</small>
+                    </p>
                     <a href="{{route('dashboard.post.open', ['id' => $post->id])}}" class="mt-3">View Details</a>
                 </div>
             </div>
