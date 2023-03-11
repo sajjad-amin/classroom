@@ -2,6 +2,9 @@
 @section('title', 'New Class')
 @section('content')
     <div class="container mt-5">
+        <div class="jumbotron">
+            <a href="{{route('dashboard.post.open', ['id' => $post->id])}}" class="btn btn-primary">Back</a>
+        </div>
         <form class="theme-form" method="post" action="{{route('dashboard.post.update')}}" enctype="multipart/form-data">
             @csrf
             @method('put')

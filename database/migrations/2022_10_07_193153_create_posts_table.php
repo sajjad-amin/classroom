@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->foreignId('poster_id')->constrained('users')->onDelete('cascade');
+            $table->string('section');
             $table->longText('text');
             $table->text('image')->nullable();
             $table->timestamp('created_at')->useCurrent();

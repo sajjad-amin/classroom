@@ -10,6 +10,7 @@
             <form class="theme-form" method="post" action="{{route('dashboard.post.create')}}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{$course->id}}">
+                <input type="hidden" name="section" value="{{$section}}">
                 <div class="modal-body">
                     <div class="modal-body">
                         <div class="mb-3">

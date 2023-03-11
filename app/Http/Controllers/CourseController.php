@@ -19,7 +19,10 @@ class CourseController extends Controller
 
     public function open($id){
         $course = Course::whereId($id)->first();
-        return view('teacher.class.class', compact(['course']));
+        $students = Member::join('users', 'members.user_id', '=', 'users.id')
+            ->where('members.course_id', $id)
+            ->select('users.*','members.section')->orderBy('members.section', 'asc')->get();
+        return view('teacher.class.class', compact(['course', 'students']));
     }
 
     public function listStudent($id)

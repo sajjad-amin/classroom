@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentCourseController;
 use App\Http\Controllers\StudentPostController;
 use App\Http\Controllers\TeacherCoureseExplore;
@@ -23,6 +25,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [WebsiteController::class, 'home'])->name('home');
+
+Route::prefix('chat')->name('chat.')->group(function(){
+    Route::get('/get/{course_id}/{offset}', [ChatController::class, 'getMessages'])->name('get');
+    Route::post('/send', [ChatController::class, 'send'])->name('send');
+});
 
 Route::prefix('class')->middleware(['auth'])->name('class.')->group(function(){
     Route::get('/{id}', [StudentCourseController::class, 'index'])->name('open');
@@ -47,8 +54,10 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dash
         Route::put('update', [CourseController::class, 'update'])->name('update');
         Route::delete('delete', [CourseController::class, 'delete'])->name('delete');
         Route::get('/{id}', [CourseController::class, 'open'])->name('open');
-        Route::get('/{id}/student', [CourseController::class, 'listStudent'])->name('students');
+        Route::put('{id}/student/move', [SectionController::class, 'moveStudent'])->name('student.move');
         Route::delete('{id}/student/remove', [CourseController::class, 'removeStudent'])->name('student.remove');
+        Route::get('{id}/section/{section}', [SectionController::class, 'index'])->name('section.open');
+        Route::post('{id}/section/add', [SectionController::class, 'addSection'])->name('section.add');
     });
     // Post
     Route::prefix('post')->name('post.')->group(function(){

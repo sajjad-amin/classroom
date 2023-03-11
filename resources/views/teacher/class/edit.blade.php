@@ -1,7 +1,10 @@
 @extends('layouts.dashboard')
 @section('title', 'Edit | '.$course->title)
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
+        <div class="jumbotron">
+            <a class="btn btn-primary" href="{{route('dashboard.class.open', ['id' => $course->id])}}">Back</a>
+        </div>
         <form method="post" action="{{route('dashboard.class.update')}}">
             @method("put")
             @csrf

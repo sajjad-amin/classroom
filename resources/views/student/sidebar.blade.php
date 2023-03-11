@@ -4,7 +4,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="homeNavbar">
-        <a class="navbar-brand" href={{route('home')}}>Home</a>
+        <a class="navbar-brand" href={{route('home')}}>Classroom</a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         </ul>
         <div class="form-inline my-2 my-lg-0">

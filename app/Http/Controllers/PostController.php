@@ -19,9 +19,11 @@ class PostController extends Controller
 
     public function create(Request $request){
         $cousre_id = $request->id;
+        $section = $request->section;
         $data = [
             'course_id' => $cousre_id,
             'poster_id' => Auth::user()->id,
+            'section' => $section,
             'text' => $request->text,
         ];
         if($request->hasFile("image")){
@@ -30,7 +32,7 @@ class PostController extends Controller
         if(Post::insert($data)){
             toastr()->success("Post has been created!");
         }
-        return redirect()->action([CourseController::class, 'open'],['id'=>$cousre_id]);
+        return redirect()->action([SectionController::class, 'index'],['id'=>$cousre_id, 'section'=>$section]);
     }
 
     public function edit($id){

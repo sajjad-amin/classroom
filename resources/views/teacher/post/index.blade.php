@@ -5,6 +5,7 @@
         <div class="jumbotron">
             <div class="dropdown mb-5">
                 <button class="btn btn-warning float-right" type="button" id="dashboardDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                <a href="{{route('dashboard.class.section.open',['id' => $post->course_id, 'section' => $post->section])}}" class="btn btn-primary float-right mr-2">Back</a>
                 <div class="dropdown-menu" aria-labelledby="dashboardDropdown">
                     <a class="dropdown-item text-primary" href="{{route('dashboard.post.edit',['id'=>$post->id])}}">Edit</a>
                     <form method="POST" action="{{ route('dashboard.post.delete') }}" onsubmit="return confirm('Are you sure?')">

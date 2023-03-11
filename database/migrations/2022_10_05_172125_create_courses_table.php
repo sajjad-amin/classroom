@@ -19,6 +19,7 @@ class CreateCoursesTable extends Migration
             $table->string('code');
             $table->string("title");
             $table->text('description');
+            $table->text('sections')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });
