@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\Member;
 use App\Models\Post;
@@ -12,8 +13,9 @@ class SectionController extends Controller
     public function index($id, $section){
         $course = Course::where('id', $id)->first();
         $posts = Post::whereCourseId($course->id)->whereSection($section)->orderBy('id', 'desc')->get();
+        $assignments = Assignment::whereCourseId($course->id)->whereSection($section)->orderBy('due_date', 'asc')->get();
         $students = Member::where('course_id', $course->id)->where('section', $section)->get();
-        return view('teacher.class.section', compact(['course', 'posts', 'section', 'students']));
+        return view('teacher.class.section', compact(['course', 'posts', 'section', 'students', 'assignments']));
     }
 
     public function addSection($id){

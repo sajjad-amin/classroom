@@ -6,9 +6,9 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\StudentAssignmentController;
 use App\Http\Controllers\StudentCourseController;
 use App\Http\Controllers\StudentPostController;
-use App\Http\Controllers\TeacherCoureseExplore;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WebsiteController;
@@ -42,6 +42,9 @@ Route::prefix('class')->middleware(['auth'])->name('class.')->group(function(){
         Route::post('comment/create', [CommentController::class, 'create'])->name('comment.create');
         Route::delete('comment/delete', [CommentController::class, 'destroy'])->name('comment.delete');
     });
+    Route::prefix('assignment')->name('assignment.')->group(function(){
+        Route::get('/{id}', [StudentAssignmentController::class, 'index'])->name('open');
+    });
 });
 
 Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dashboard.')->group(function(){
@@ -73,7 +76,11 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dash
     });
     // Assignment
     Route::prefix('assignment')->name('assignment.')->group(function(){
+        Route::get('/{id}', [AssignmentController::class, 'index'])->name('open');
         Route::post('create', [AssignmentController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [AssignmentController::class, 'edit'])->name('edit');
+        Route::put('update', [AssignmentController::class, 'update'])->name('update');
+        Route::delete('delete', [AssignmentController::class, 'delete'])->name('delete');
     });
 });
 

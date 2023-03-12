@@ -16,19 +16,19 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Assignment Title:</label>
-                            <input name="title" class="form-control" id="name" type="text" placeholder="Assignment Title">
+                            <input name="title" class="form-control" id="title" type="text" placeholder="Assignment Title" required>
                         </div>
                         <div class="mb-3">
                             <label for="description" class="col-form-label">Description:</label>
-                            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Description"></textarea>
+                            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Description" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="due_date" class="col-form-label">Due Date:</label>
-                            <input name="due_date" class="form-control" id="due_date" type="datetime-local" placeholder="Due Date">
+                            <input name="due_date" class="form-control" id="due_date" type="datetime-local" placeholder="Due Date" required>
                         </div>
                         <div class="mb-3">
                             <label for="points" class="col-form-label">Points:</label>
-                            <select name="points" class="form-control" id="points">
+                            <select name="points" class="form-control" id="points" required>
                                 @for($i=1;$i<=100;$i++)
                                     <option value="{{$i}}">{{$i}}</option>
                                 @endfor
@@ -36,7 +36,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="attachment" class="col-form-label">Upload Attachment:</label>
-                            <input name="attachment" class="form-control" id="attachment" type="file" placeholder="Upload Attachment">
+                            <input name="attachment" class="form-control" id="attachment" type="file" placeholder="Upload Attachment" required>
                         </div>
                     </div>
                 </div>

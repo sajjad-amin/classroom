@@ -41,15 +41,17 @@
             </div>
             <div class="col-md-6">
                 <h4 class="mb-3">Assignments</h4>
-                <div class="card post mt-3">
-                    <div class="card-body">
-                        <p class="card-text">Assignment</p>
-                        <p class="card-text">
-                            <small class="text-muted">Posted on</small>
-                        </p>
-                        <a href="{{route('dashboard.post.open', ['id' => $post->id])}}" class="mt-3">View Details</a>
+                @foreach($assignments as $assignment)
+                    <div class="card post mt-3">
+                        <div class="card-body">
+                            <p class="card-text">{{$assignment->title}}</p>
+                            <p class="card-text">
+                                <small class="text-muted">Due on <strong>{{date("d M, Y h:i A", $assignment->due_date)}}</strong></small>
+                            </p>
+                            <a href="{{route('dashboard.assignment.open', ['id' => $assignment->id])}}" class="mt-3">Open Assignment</a>
+                        </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

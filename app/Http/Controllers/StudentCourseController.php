@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\Member;
 use App\Models\Post;
@@ -15,7 +16,8 @@ class StudentCourseController extends Controller
         $section = Member::where('user_id', $student_id)->where('course_id', $id)->first()->section;
         $course = Course::get()->where('id', $id)->first();
         $posts = Post::where('course_id', $id)->where('section', $section)->get();
-        return view('student.class.index', compact('course', 'posts', 'section'));
+        $assignments = Assignment::where('course_id', $id)->where('section', $section)->get();
+        return view('student.class.index', compact(['course', 'posts', 'section', 'assignments']));
     }
 
     public function listStudent($id)

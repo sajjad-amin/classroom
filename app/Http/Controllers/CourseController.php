@@ -25,16 +25,6 @@ class CourseController extends Controller
         return view('teacher.class.class', compact(['course', 'students']));
     }
 
-    public function listStudent($id)
-    {
-        $course = Course::get()->where('id', $id)->first();
-        $members = Member::join('users', 'members.user_id', '=', 'users.id')
-            ->where('members.course_id', $id)
-            ->select('users.*')
-            ->get();
-        return view('teacher.class.students', compact('course', 'members'));
-    }
-
     public function removeStudent(Request $request, $id)
     {
         $member = Member::where('user_id', $request->student_id)->where('course_id', $id)->first();
