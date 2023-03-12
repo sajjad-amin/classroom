@@ -42,8 +42,10 @@ class PostController extends Controller
 
     public function update(Request $request){
         $id = $request->id;
+        $comment_on = $request->comment_on;
         $data = [
             'text' => $request->text,
+            'student_can_comment' => $comment_on,
         ];
         if($request->hasFile("image")){
             $post = Post::whereId($id)->first();
@@ -63,7 +65,7 @@ class PostController extends Controller
         if(Post::whereId($id)->delete()){
             toastr()->success("post has been deleted!");
         }
-        return redirect()->action([CourseController::class, 'open'],['id' => $post->course_id]);
+        return redirect()->action([SectionController::class, 'index'],['id' => $post->course_id, 'section' => $post->section]);
     }
 
     public function createComment(Request $request){

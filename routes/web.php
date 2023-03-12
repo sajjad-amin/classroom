@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MemberController;
@@ -58,6 +59,7 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dash
         Route::delete('{id}/student/remove', [CourseController::class, 'removeStudent'])->name('student.remove');
         Route::get('{id}/section/{section}', [SectionController::class, 'index'])->name('section.open');
         Route::post('{id}/section/add', [SectionController::class, 'addSection'])->name('section.add');
+        Route::put('{id}/section/remove', [SectionController::class, 'removeSection'])->name('section.remove');
     });
     // Post
     Route::prefix('post')->name('post.')->group(function(){
@@ -68,6 +70,10 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dash
         Route::delete('delete', [PostController::class, 'delete'])->name('delete');
         Route::post('comment/create', [PostController::class, 'createComment'])->name('comment.create');
         Route::delete('comment/delete', [PostController::class, 'deleteComment'])->name('comment.delete');
+    });
+    // Assignment
+    Route::prefix('assignment')->name('assignment.')->group(function(){
+        Route::post('create', [AssignmentController::class, 'create'])->name('create');
     });
 });
 

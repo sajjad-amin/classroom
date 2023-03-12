@@ -12,7 +12,8 @@ class SectionController extends Controller
     public function index($id, $section){
         $course = Course::where('id', $id)->first();
         $posts = Post::whereCourseId($course->id)->whereSection($section)->orderBy('id', 'desc')->get();
-        return view('teacher.class.section', compact(['course', 'posts', 'section']));
+        $students = Member::where('course_id', $course->id)->where('section', $section)->get();
+        return view('teacher.class.section', compact(['course', 'posts', 'section', 'students']));
     }
 
     public function addSection($id){
@@ -40,6 +41,26 @@ class SectionController extends Controller
             $course->save();
         }
         return redirect()->back();
+    }
+
+    public function removeSection(Request $request, $id){
+        $course_id = $id;
+        $section = $request->section;
+        $course = Course::where('id', $course_id)->first();
+        $sections = $course->sections;
+        $newSections = [];
+        if($sections){
+            $section_object = json_decode($sections);
+            foreach ($section_object as $key => $value) {
+                if($value->name != $section){
+                    $newSections[] = $value;
+                }
+            }
+            $newSections = json_encode($newSections);
+            $course->sections = $newSections;
+            $course->save();
+        }
+        return redirect()->action([CourseController::class, 'open'], ['id' => $course_id]);
     }
 
     public function moveStudent(Request $request, $id){

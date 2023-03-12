@@ -19,14 +19,20 @@
                         <h5>Comments</h5>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{route('class.post.comment.create')}}">
-                            @csrf
-                            <input type="hidden" name="post_id" value="{{$post->id}}">
-                            <div class="form-group">
-                                <textarea class="form-control" name="comment" placeholder="Write a comment" rows="3"></textarea>
+                        @if($post->student_can_comment)
+                            <form method="POST" action="{{route('class.post.comment.create')}}">
+                                @csrf
+                                <input type="hidden" name="post_id" value="{{$post->id}}">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="comment" placeholder="Write a comment" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary float-right">Post</button>
+                            </form>
+                        @else
+                            <div class="alert alert-warning">
+                                <p class="mb-0">Teacher has disabled commenting on this post.</p>
                             </div>
-                            <button type="submit" class="btn btn-primary float-right">Post</button>
-                        </form>
+                        @endif
                         <br><br>
                         <hr>
                         @foreach($comments as $comment)

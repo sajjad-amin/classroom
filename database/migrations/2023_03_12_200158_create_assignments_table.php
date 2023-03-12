@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostsTable extends Migration
+class CreateAssignmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
-            $table->foreignId('poster_id')->constrained('users')->onDelete('cascade');
-            $table->boolean('student_can_comment')->default(true);
+            $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
             $table->string('section');
-            $table->longText('text');
-            $table->text('image')->nullable();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->nullable();
+            $table->string('title');
+            $table->text('description');
+            $table->integer('points');
+            $table->string('attachment')->nullable();
+            $table->string('due_date');
+            $table->timestamps();
         });
     }
 
@@ -33,6 +34,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('assignments');
     }
 }

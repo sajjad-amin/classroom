@@ -24,7 +24,7 @@ class StudentCourseController extends Controller
         $section = Member::where('user_id', $student_id)->where('course_id', $id)->first()->section;
         $course = Course::get()->where('id', $id)->first();
         $members = Member::join('users', 'members.user_id', '=', 'users.id')
-            ->where('members.course_id', $id)->where('members.section', $section)
+            ->where('members.course_id', $id)->where('members.section', $section)->where('members.section', $section)
             ->select('users.*')
             ->get();
         return view('student.class.students', compact('course', 'members'));
