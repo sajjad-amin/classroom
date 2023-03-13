@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\Member;
 use App\Models\Post;
+use App\Models\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -44,7 +46,13 @@ class CourseController extends Controller
                 'teacher_id' => Auth::user()->id,
                 'code' => $request->code,
                 'title' => $request->title,
-                'description' => $request->description
+                'description' => $request->description,
+                'sections' => json_encode([
+                    [
+                        'name' => 'Section A',
+                        'description' => 'This is the first section of the class'
+                    ]
+                ])
             ];
             if(Course::insert($data)){
                 toastr()->success("class has been created!");
@@ -78,10 +86,20 @@ class CourseController extends Controller
     public function delete(Request $request)
     {
         $posts = Post::whereCourseId($request->id)->get();
+        $assignments = Assignment::whereCourseId($request->id)->get();
+        $submissions = Submission::whereCourseId($request->id)->get();
         if(Course::whereId($request->id)->delete()){
             Post::whereCourseId($request->id)->delete();
             foreach ($posts as $post){
                 Storage::delete($post->image);
+            }
+            Assignment::whereCourseId($request->id)->delete();
+            foreach ($assignments as $assignment){
+                Storage::delete($assignment->attachment);
+            }
+            Submission::whereCourseId($request->id)->delete();
+            foreach ($submissions as $submission){
+                Storage::delete($submission->file);
             }
             toastr()->success("class has been deleted!");
         }

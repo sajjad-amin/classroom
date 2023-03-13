@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
+use App\Models\Submission;
 use Carbon\Traits\Date;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,8 @@ class AssignmentController extends Controller
 {
     public function index(Request $request, $id){
         $assignment = Assignment::where('id', $id)->first();
-        return view('teacher.assignment.index', compact(['assignment']));
+        $submissions = Submission::where('assignment_id', $id)->orderBy('score', 'desc')->get();
+        return view('teacher.assignment.index', compact(['assignment', 'submissions']));
     }
     public function create(Request $request){
         $course_id = $request->course_id;
@@ -82,11 +84,32 @@ class AssignmentController extends Controller
     public function delete(Request $request){
         $id = $request->id;
         $assignment = Assignment::where('id', $id)->first();
+        $submissions = Submission::where('assignment_id', $id)->get();
+        foreach ($submissions as $submission){
+            unlink(storage_path('app/' . $submission->file));
+        }
+        Submission::where('assignment_id', $id)->delete();
         if ($assignment->attachment) {
             unlink(storage_path('app/' . $assignment->attachment));
         }
         $assignment->delete();
         toastr()->success("Assignment has been deleted!");
         return redirect()->action([SectionController::class, 'index'],['id'=>$assignment->course_id, 'section'=>$assignment->section]);
+    }
+
+    public function remark(Request $request){
+        $id = $request->id;
+        $score = $request->score;
+        $comment = $request->comment;
+        $submission = Submission::where('id', $id)->first();
+        if($score){
+            $submission->score = $score;
+            $submission->comment = $comment;
+            $submission->save();
+            toastr()->success("Submission has been remarked!");
+        }else{
+            toastr()->error("Please fill all the fields!");
+        }
+        return redirect()->action([AssignmentController::class, 'index'],['id'=>$submission->assignment_id]);
     }
 }

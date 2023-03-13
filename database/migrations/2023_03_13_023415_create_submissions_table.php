@@ -15,6 +15,16 @@ class CreateSubmissionsTable extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
+            $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('assignment_id')->constrained('assignments')->onDelete('cascade');
+            $table->string('section');
+            $table->string('file');
+            $table->text('note');
+            $table->text('comment')->nullable();
+            $table->integer('score')->default(0);
+            $table->string('submitted_at');
             $table->timestamps();
         });
     }

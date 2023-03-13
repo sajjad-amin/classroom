@@ -28,34 +28,49 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <h4 class="mb-3">Posts</h4>
-                @foreach($posts as $post)
-                    <div class="card post mt-3">
-                        <div class="card-body">
-                            <p class="card-text">{{$post->text}}</p>
-                            <p class="card-text">
-                                <small class="text-muted">Posted by <span
-                                        class="font-weight-bold">{{User::get()->where('id', $post->poster_id)->first()->name}}</span>
-                                    on {{$post->created_at->format("d M, Y h:i A")}}</small>
-                            </p>
-                            <a href="{{route('class.post.index', ['id' => $post->id])}}" class="mt-3">View Details</a>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-3">Posts</h4>
                     </div>
-                @endforeach
+                    <div class="card-body">
+                        @foreach($posts as $post)
+                            <div class="card post mt-3">
+                                <div class="card-body">
+                                    <p class="card-text">{{$post->text}}</p>
+                                    <p class="card-text">
+                                        <small class="text-muted">Posted by <span
+                                                class="font-weight-bold">{{User::get()->where('id', $post->poster_id)->first()->name}}</span>
+                                            on {{$post->created_at->format("d M, Y h:i A")}}</small>
+                                    </p>
+                                    <a href="{{route('class.post.index', ['id' => $post->id])}}" class="mt-3">View Details</a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
-                <h4 class="mb-3">Assignments</h4>
-                @foreach($assignments as $assignment)
-                    <div class="card post mt-3">
-                        <div class="card-body">
-                            <p class="card-text">{{$assignment->title}}</p>
-                            <p class="card-text">
-                                <small class="text-muted">Due on <strong>{{date("d M, Y h:i A", $assignment->due_date)}}</strong></small>
-                            </p>
-                            <a href="{{route('class.assignment.open', ['id' => $assignment->id])}}" class="mt-3">Open Assignment</a>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-3">Assignments</h4>
                     </div>
-                @endforeach
+                    <div class="card-body">
+                        @foreach($assignments as $assignment)
+                            @php
+                                $submission = \App\Models\Submission::get()->where('assignment_id', $assignment->id)->where('student_id', Auth::user()->id)->first();
+                            @endphp
+                            <div class="card post mt-3">
+                                <div class="card-body">
+                                    <p class="card-text">{{$assignment->title}} @if($submission) <span class="badge badge-success">Submitted</span> @else <span class="badge badge-danger">Due</span> @endif</p>
+                                    <p class="card-text">
+                                        <small class="text-muted">Due on <strong>{{date("d M, Y h:i A", $assignment->due_date)}}</strong></small>
+                                    </p>
+                                    <a href="{{route('class.assignment.open', ['id' => $assignment->id])}}" class="mt-3">Open Assignment</a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>

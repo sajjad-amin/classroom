@@ -7,12 +7,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="{{route('class.join')}}">
+            <form method="POST" action="{{route('class.assignment.submit')}}" enctype="multipart/form-data" >
+                @csrf
+                <input type="hidden" name="id" value="{{$assignment->id}}">
                 <div class="modal-body">
-                    @csrf
                     <div class="form-group">
                         <label for="submission">Upload a file</label>
-                        <input type="file" class="form-control-file" id="submission" name="submission">
+                        <input type="file" class="form-control-file" id="submission" name="file">
                     </div>
                     <div class="form-group">
                         <label for="note">Write a note</label>

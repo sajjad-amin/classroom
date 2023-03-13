@@ -44,6 +44,8 @@ Route::prefix('class')->middleware(['auth'])->name('class.')->group(function(){
     });
     Route::prefix('assignment')->name('assignment.')->group(function(){
         Route::get('/{id}', [StudentAssignmentController::class, 'index'])->name('open');
+        Route::post('submit', [StudentAssignmentController::class, 'submit'])->name('submit');
+        Route::delete('unsubmit', [StudentAssignmentController::class, 'unsubmit'])->name('unsubmit');
     });
 });
 
@@ -81,6 +83,7 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'role'])->name('dash
         Route::get('edit/{id}', [AssignmentController::class, 'edit'])->name('edit');
         Route::put('update', [AssignmentController::class, 'update'])->name('update');
         Route::delete('delete', [AssignmentController::class, 'delete'])->name('delete');
+        Route::put('submission/remark', [AssignmentController::class, 'remark'])->name('submission.remark');
     });
 });
 
