@@ -2,6 +2,7 @@
 @section('content')
     @include('student.class.modal.join')
     <section>
+        @if(!\Illuminate\Support\Facades\Auth::user())
         <div class="introduction d-flex align-items-center justify-content-center">
             <h1 class="title">E-Coaching</h1>
             <div class="vibrate-1 mt-5">
@@ -11,6 +12,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="container-fluid p-3">
             <div class="d-flex flex-wrap">
                 @foreach($courses as $course)
