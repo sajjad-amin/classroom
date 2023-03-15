@@ -2,6 +2,15 @@
 @section('content')
     @include('student.class.modal.join')
     <section>
+        <div class="introduction d-flex align-items-center justify-content-center">
+            <h1 class="title">E-Coaching</h1>
+            <div class="vibrate-1 mt-5">
+                <div class="button" onclick="location.href='{{route('login')}}'">
+                    JOIN NOW
+                    <i class="fa fa-none"></i>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid p-3">
             <div class="d-flex flex-wrap">
                 @foreach($courses as $course)
