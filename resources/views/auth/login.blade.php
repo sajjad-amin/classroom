@@ -40,7 +40,10 @@
                                 @endif
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary float-right">Login</button>
+                        <div>
+                            <button type="submit" class="btn btn-primary float-right">Login</button>
+                            <p>New to E-Coaching? <a href="{{route('register')}}">Register</a></p>
+                        </div>
                     </form>
                 </div>
             </div>
